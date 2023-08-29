@@ -45,6 +45,11 @@ public:
 
     vector<Object> Detect(cv::Mat image, bool use_gpu) override {
 
+        if (use_gpu == true && ncnn::get_gpu_count() == 0)
+        {
+            use_gpu = false;
+        }
+
         double start_time = ncnn::get_current_time();
         // ncnn from bitmap
         const int target_size = 224;
@@ -325,7 +330,7 @@ public:
     {
         if (use_gpu == true && ncnn::get_gpu_count() == 0)
         {
-            return {};
+            use_gpu = false;
         }
         double start_time = ncnn::get_current_time();
 

@@ -4,6 +4,7 @@ Vulkan https://developer.nvidia.com/vulkan-driver \
 ncnn  https://github.com/Tencent/ncnn/releases install ncnn-20230816-windows-vs2022.zip\
 opencv https://opencv.org/releases/ opencv4.7.0\
 ## second open ncnn.sln
+use Release x64 to run project\
 navigate to "Configuration Properties" -> "C/C++" -> "General". Add the path to the "Include Directories" field \
 "yourPath"\Vulkan\Include \
 "yourPath"\ncnn-20230816-windows-vs2022\x64\include \
@@ -82,6 +83,7 @@ Vulkan https://developer.nvidia.com/vulkan-driver \
 ncnn  https://github.com/Tencent/ncnn/releases 安装 ncnn-20230816-windows-vs2022.zip\
 opencv https://opencv.org/releases/ opencv4.7.0\
 ## 第二步打开 ncnn.sln
+使用 release x64 运行项目\
 导航到 "Configuration Properties" -> "C/C++" -> "General"。在 "Include Directories" 字段中添加以下路径 \
 "你的路径"\Vulkan\Include \
 "你的路径"\ncnn-20230816-windows-vs2022\x64\include \

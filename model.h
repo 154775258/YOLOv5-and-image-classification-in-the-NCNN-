@@ -36,7 +36,7 @@ public:
     bool Init(std::string modelPath) override {
         int ret1 = resNet50.load_param((modelPath + ".param").c_str());
         int ret2 = resNet50.load_model((modelPath + ".bin").c_str());
-        std::cout << "模型地址: " << &resNet50 << '\n';
+        std::cout << "妯″瀷鍦板潃: " << &resNet50 << '\n';
         if (ret1 && ret2)
             return true;
         else
@@ -44,6 +44,11 @@ public:
     }
 
     vector<Object> Detect(cv::Mat image, bool use_gpu) override {
+
+        if (use_gpu == true && ncnn::get_gpu_count() == 0)
+        {
+            use_gpu = false;
+        }
 
         double start_time = ncnn::get_current_time();
         // ncnn from bitmap
@@ -71,7 +76,7 @@ public:
                 max_prob = prob;
                 max_index = i;
             }
-            //std::cout << "概率:" << prob << '\n';
+            //std::cout << "姒傜巼:" << prob << '\n';
         }
         vector<Object> ans;
         double end_time = ncnn::get_current_time() - start_time;
@@ -314,8 +319,8 @@ public:
             }
         }
 
-        std::cout << "Yolov5 模型已加载\n";
-        std::cout << "模型地址: " << &yolov5 << '\n';
+        std::cout << "Yolov5 妯″瀷宸插姞杞絓n";
+        std::cout << "妯″瀷鍦板潃: " << &yolov5 << '\n';
         
         return true;
     }
@@ -325,7 +330,7 @@ public:
     {
         if (use_gpu == true && ncnn::get_gpu_count() == 0)
         {
-            return {};
+            use_gpu = false;
         }
         double start_time = ncnn::get_current_time();
 

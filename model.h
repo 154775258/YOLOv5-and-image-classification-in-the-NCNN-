@@ -402,7 +402,7 @@ public:
             // stride 16
             {
                 ncnn::Mat out;
-                ex.extract("471", out);
+                ex.extract("output1", out);
 
                 ncnn::Mat anchors(6);
                 anchors[0] = 30.f;
@@ -421,7 +421,7 @@ public:
             // stride 32
             {
                 ncnn::Mat out;
-                ex.extract("483", out);
+                ex.extract("output2", out);
 
                 ncnn::Mat anchors(6);
                 anchors[0] = 116.f;

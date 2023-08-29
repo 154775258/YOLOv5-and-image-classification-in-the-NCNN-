@@ -227,7 +227,7 @@ Reshape                  /model.24/Reshape        1 1 /model.24/m.0/Conv_output_
 Permute                  /model.24/Transpose      1 1 /model.24/Reshape_output_0 output 0=1
 Convolution              /model.24/m.1/Conv       1 1 /model.20/cv3/act/Mul_output_0_splitncnn_0 /model.24/m.1/Conv_output_0 0=48 1=1 5=1 6=18432
 Reshape                  /model.24/Reshape_1      1 1 /model.24/m.1/Conv_output_0 /model.24/Reshape_1_output_0 0=-1 1=16 2=3
-Permute                  /model.24/Transpose_1    1 1 /model.24/Reshape_1_output_0 471 0=1
+Permute                  /model.24/Transpose_1    1 1 /model.24/Reshape_1_output_0 output1 0=1
 Convolution              /model.24/m.2/Conv       1 1 /model.23/cv3/act/Mul_output_0 /model.24/m.2/Conv_output_0 0=48 1=1 5=1 6=36864
 Reshape                  /model.24/Reshape_2      1 1 /model.24/m.2/Conv_output_0 /model.24/Reshape_2_output_0 0=-1 1=16 2=3
-Permute                  /model.24/Transpose_2    1 1 /model.24/Reshape_2_output_0 483 0=1
+Permute                  /model.24/Transpose_2    1 1 /model.24/Reshape_2_output_0 output2 0=1

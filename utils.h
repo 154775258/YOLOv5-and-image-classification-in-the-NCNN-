@@ -288,23 +288,29 @@ namespace utils {
         double fps = video.get(cv::CAP_PROP_FPS);
         int total_frames = int(video.get(cv::CAP_PROP_FRAME_COUNT));
         string saveName = savePath + '/' + to_string(rand()) + ".mp4";
-        cv::VideoWriter outputVideo(saveName, cv::VideoWriter::fourcc('m', 'p', '4', 'v'), fps, cv::Size(width, height));
+        vector<cv::Mat> images;
         dectetfps = 0;
         cv::Mat frame;
         while (video.read(frame)) {
             frame = drawYoloRect(frame, model->Detect(frame, true), classes);//»­¿òº¯Êý
             dectetfps++;
-            cout << dectetfps << '/' << total_frames << '\n';
-            if(saveFlag)
-            outputVideo.write(frame);
+            if (saveFlag)
+                images.push_back(frame.clone());
+            cout << dectetfps << '/' << total_frames << endl;
             if (showFlag) {
                 cv::imshow("image", frame);
                 cv::waitKey(1);
             }
         }
         if(showFlag)cv::destroyWindow("image");
+        if (saveFlag) {
+            cv::VideoWriter outputVideo(saveName, cv::VideoWriter::fourcc('m', 'p', '4', 'v'), fps, cv::Size(width, height));
+            for(int i = 0;i < images.size();++i)
+            outputVideo.write(images[i]);
+            outputVideo.release();
+        }
         video.release();
-        outputVideo.release();
+
     }
 
     bool Dectet(string path, Model* model, vector<string> classes, bool saveFlag, string savePath, bool showFlag) {

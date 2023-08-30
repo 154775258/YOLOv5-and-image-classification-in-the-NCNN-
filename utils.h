@@ -12,9 +12,10 @@
 #include <ctime>
 
 namespace utils {
+    cv::Mat getDectetImage(cv::Mat image, Model* model, vector<string>& classes);
     cv::Mat drawText2Image(cv::Mat image, std::string text);
     cv::Mat drawYoloRect(cv::Mat image, std::vector<Object> boxs, std::vector<std::string>& classes);
-    std::vector<cv::Mat> getAllYoloDectet(cv::Mat image, std::vector<Object> res);
+    std::vector<cv::Mat> getAllYoloDectetBox(cv::Mat image, std::vector<Object> res);
     void imageTest();
     void videoTest();
     void putFps();
@@ -25,6 +26,12 @@ namespace utils {
     vector<cv::String> getImagePath(string path);
     vector<cv::String> getVideoPath(string path);
 
+    cv::Mat getDectetImage(cv::Mat image, Model* model, vector<string>& classes){
+        auto obj = model->Detect(image, true);
+        return drawYoloRect(image, obj, classes).clone();
+
+    }
+
     cv::Mat drawText2Image(cv::Mat image, std::string text) {
         cv::Rect rect(0, 0, 40, 20);
         std::vector<cv::Point> contour = { {0,0},{0,20}, {40,20}, {40,0} };
@@ -34,15 +41,21 @@ namespace utils {
     }
 
     cv::Mat drawYoloRect(cv::Mat image, std::vector<Object> boxs, std::vector<std::string>& classes) {
+        string text;
         for (auto& box : boxs) {
-            int x = box.x, y = box.y, w = box.w, h = box.h, label = box.label;
+            if (classes.size() < box.label) {
+                text = classes[box.label] + std::to_string(box.prob);
+            }
+            else
+                text = to_string(box.label) + to_string(box.prob);
+            int x = box.x, y = box.y, w = box.w, h = box.h;
             cv::rectangle(image, { x, y, w, h }, cv::Scalar(0, 0, 0));
-            cv::putText(image, classes[label] + std::to_string(box.prob), cv::Point(x, y), cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8f, cv::Scalar(0, 0, 255), 1, 1);
+            cv::putText(image, text, cv::Point(x, y), cv::FONT_HERSHEY_COMPLEX_SMALL, 0.8f, cv::Scalar(0, 0, 255), 1, 1);
         }
         return image;
     }
 
-    std::vector<cv::Mat> getAllYoloDectet(cv::Mat image, std::vector<Object> res) {
+    std::vector<cv::Mat> getAllYoloDectetBox(cv::Mat image, std::vector<Object> res) {
         std::vector<cv::Mat> ans;
         for (int i = 0; i < res.size(); ++i) {
             cv::Rect roi((int)res[i].x, (int)res[i].y, (int)res[i].w, (int)res[i].h);
@@ -50,7 +63,6 @@ namespace utils {
         }
         return ans;
     }
-
 
     std::vector<std::string> colorClasses = {
     "red", "blue", "white", "yellow", "cyan", "purple", "green", "black"
@@ -106,7 +118,7 @@ namespace utils {
         cv::imshow("image", image);
         cv::waitKey(0);
         cv::destroyWindow("image");
-        std::vector<cv::Mat> allMat = getAllYoloDectet(image, res);
+        std::vector<cv::Mat> allMat = getAllYoloDectetBox(image, res);
         for (int i = 0; i < allMat.size(); ++i) {
             cv::cvtColor(allMat[i], allMat[i], cv::COLOR_BGR2RGB);
             std::string ans = colorClasses[model.Detect(allMat[i], true)[0].label];

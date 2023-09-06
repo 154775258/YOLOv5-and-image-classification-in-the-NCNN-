@@ -56,7 +56,7 @@ opencv_world470d.lib\
 `main, which is an object detection model with 11 classes `\
 `and color, which is an image classification model for classifying colors `
 ```testCode
-//we can use ResNet or Yolo to create model.
+//we can use ResNet or Yolov5 or Yolov8 to create model.
 ResNet model;
 //put modelPath to Init
 model.Init("./model/color");
@@ -135,7 +135,7 @@ opencv_world470d.lib\
 `main，这是一个具有11个类别的目标检测模型`\
 `以及color，这是一个用于对颜色进行分类的图像分类模型`
 ```testCode
-//我们可以使用ResNet或Yolo创建模型。
+//我们可以使用ResNet或Yolov5或Yolov8创建模型。
 ResNet model;
 //将模型路径放入Init函数中
 model.Init("./model/color");
